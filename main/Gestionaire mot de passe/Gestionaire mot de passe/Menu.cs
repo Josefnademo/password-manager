@@ -22,41 +22,93 @@ namespace Gestionaire_mot_de_passe
 
         public void DisplayMenu()
         {
-            Console.WriteLine("***************************************");
-            Console.WriteLine("*     Selectionnez une action         *");
-            Console.WriteLine("*     1.  Consulter un mot de passe   *");
-            Console.WriteLine("*     2.  Ajouter un mot de passe     *");
-            Console.WriteLine("*     3.  Supprimer un mot de passe   *");
-            Console.WriteLine("*     4.  Quitter le programme        *");
-            Console.WriteLine("***************************************");
 
-            Console.Write("Faites votre choix : ");
-            string answer = Console.ReadLine();
+            /* Console.WriteLine(@"
+                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*++++++*#%@@@@@@@@@@@@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++++++++++++===+#@@@@@@@@@@@@@@
+                             @@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@*+++++++++++++++++++++++#@@@@@@@@@@@
+                             @@@@@@@@@@@@@@------=#@@@@@@@@@@@@@*+++++++++++++++++++++++++++#@@@@@@@@@
+                             @@@@@@@@@@@@@@*--------+@@@@@@@@@*+++++++++++++++++=========+++++@@@@@@@@
+                             @@@@@@@@@@@@@@@@#=-----=##=%@@@@#+++++++++++++++++++=---=+=+++++++%@@@@@@
+                             @@@@@@@@@@@@@@@@@@@%#+*%%#---=@%++++++++++++++++++++++=--+=+=++++++@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@%%++--=+++++++++++++++++++++++++=-==++++++++@@@@@
+                             @@@@@@@@@@@%#*#+*-------=#=---+++++++**+++++++++++++++++++++++++++++#@@@@
+                             @@@@%-----=--=+*-------=#%#+-=++++*+==+%+=+++++++++++++++++++++++++++@@@@
+                             @@@%-------=*+++-----==+*---+++++*+*#*-%%===+++++++++++++++++++++++++@@@@
+                             @@@+----==++==------=+-=-------+===##%%@%=====+++++++++++++++++++++++@@@@
+                             @@@@%#@@@@@@@@@@#=--=*=-=---===*====+*##*==++++++++++++++++++++++++++@@@@
+                             @@@@@@@@@%%#*=---=====+*+===--==+=====++==+++++++++++++++++++++++++++@@@@
+                             @@@@@@@@----=------============-=+======++++++++++++++++++++++++++++#@@@@
+                             @@@@@@@------=========+*++++==+*+++======++++++++++++++++++++++++++*@@@@@
+                             @@@@@@#=---*###%%@@@@@@@@@@@@%*===++====++==+**+++++++++++++++++++*@@@@@@
+                             @@@@@@@%%@@@@@@@@@@@@@@@@@@@%%%#=#@%*+##++%+=+++++**+++++++++++++*@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@@+--+#%%@@@@**##%%@@****++++++++++++++++%@@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@+-----#@@@@@@@#*++*#***+**********+=-+%@@@@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@#---=*@@@@@@@@@@@@@#++************+==*@@@@@@@@@@@@
+                             @@@@@@@@@@@@@@@@@@@@@@@@#*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@@@@");*/
+            string[] menuOptions = new string[] { "1.  Consulter un mot de passe", "2.  Ajouter un mot de passe", "3.  Supprimer un mot de passe", "4.  Quitter le programme" };
+            int menuSelect = 0;
 
-            switch (answer)
+            while (true)
             {
-                case "1":
-                    Console.Clear();
-                    ViewPassword();
-                    break;
-                case "2":
-                    Console.Clear();
-                    AddPassword();
-                    break;
-                case "3":
-                    Console.Clear();
-                    DeletePassword();
-                    break;
-                case "4":
-                    Environment.Exit(0);
-                    break;
-                default:
-                    /*ajoute*/
-                    Console.WriteLine("Choix invalide, veuillez réessayer.\n \n \n \t\t\t\t***pour recommencer cliquer sur une touche***");
-                    Console.ReadKey();
-                    Console.Clear();
-                    DisplayMenu();
-                    break; /*ajoute*/
+                Console.Clear();
+                Console.CursorVisible = false;
+                Console.WriteLine("Hello and welcome! Please choose type of registration:");
+
+                for (int i = 0; i < menuOptions.Length; i++)
+                {
+                    Console.WriteLine((i == menuSelect ? "  -->   " : "") + menuOptions[i] + (i == menuSelect ? "   <--" : ""));
+                }
+
+                //detecte key pressed,like(this key, which is pressed, will be the value of "keyPressed" variable).
+                var keyPressed = Console.ReadKey();
+
+                if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != menuOptions.Length - 1)
+                {
+                    menuSelect++;
+                }
+                else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelect >= 1)
+                {
+                    menuSelect--;
+                }
+                else if (keyPressed.Key == ConsoleKey.Enter || keyPressed.Key == ConsoleKey.Spacebar)
+                {
+                    switch (menuSelect)
+                    {
+                        //1.  Consulter un mot de passe
+                        case 0:
+                            Console.Clear();
+                            ViewPassword();
+                            break;
+
+                        //2.Ajouter un mot de passe
+                        case 1:
+                            Console.Clear();
+                            AddPassword();
+                            break;
+
+                        //3.Supprimer un mot de passe
+                        case 2:
+                            Console.Clear();
+                            DeletePassword();
+                            break;
+
+                        //4.Quitter le programme
+                        case 3:
+                            Environment.Exit(0);
+                            break;
+
+                            //rien
+                        default:
+                            /*ajoute*/
+                            Console.WriteLine("Choix invalide, veuillez réessayer.\n \n \n \t\t\t\t***pour recommencer cliquer sur une touche***");
+                            Console.ReadKey();
+                            Console.Clear();
+                            DisplayMenu();
+                            break; /*ajoute*/
+                    }
+                }
             }
         }
 
@@ -76,6 +128,9 @@ namespace Gestionaire_mot_de_passe
 
         private void ViewPassword()
         {
+            //string password = File.ReadAllText(string filePath);
+
+           // Console.WriteLine($"{serviceName} : {password}    ");
             Console.WriteLine("Entrez le nom du service pour consulter le mot de passe : ");
             serviceName = Console.ReadLine();
             string passwordFilePath = Path.Combine(PasswordPath, $"{serviceName}.txt");
@@ -87,19 +142,64 @@ namespace Gestionaire_mot_de_passe
         {
             Console.WriteLine("Entrez le nom du service à supprimer : ");
             serviceName = Console.ReadLine();
+
             string passwordFilePath = Path.Combine(PasswordPath, $"{serviceName}.txt");
 
             if (File.Exists(passwordFilePath))
             {
                 File.Delete(passwordFilePath);
                 Console.WriteLine($"Le mot de passe pour {serviceName} a été supprimé.");
+                Console.ReadKey();
+                DisplayMenu();
             }
             else
-            {
-                Console.WriteLine("Aucun mot de passe trouvé pour ce service.");
+            {                
+                string[] menuOptions = new string[] { "Oui", "Non" };
+                int menuSelectDelete = 0;
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("\t\t\tAucun mot de passe trouvé pour ce service. Essayer un autre nom? ");
+                    Console.CursorVisible = false;
+                    
+
+                    for (int i = 0; i < menuOptions.Length; i++)
+                    {
+                        Console.WriteLine((i == menuSelectDelete ? "\t\t\t\t\t-->  " : "") + menuOptions[i] + (i == menuSelectDelete ? "   <--" : ""));
+                    }
+
+                    //detecte key pressed,like(this key, which is pressed, will be the value of "keyPressed" variable).
+                    var keyPressed = Console.ReadKey();
+
+                    if (keyPressed.Key == ConsoleKey.DownArrow && menuSelectDelete != menuOptions.Length - 1)
+                    {
+                        menuSelectDelete++;
+                    }
+                    else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelectDelete >= 1)
+                    {
+                        menuSelectDelete--;
+                    }
+                    else if (keyPressed.Key == ConsoleKey.Enter || keyPressed.Key == ConsoleKey.Spacebar)
+                    {
+                        switch (menuSelectDelete)
+                        {
+                            //1.  OUI. retaper
+                            case 0:
+                                Console.Clear();
+                                DeletePassword();
+                                break;
+
+                            //2. NON. ouvrir le menu
+                            case 1:
+                                Console.Clear();
+                                DisplayMenu();
+                                break;
+                        }
+                    }
+                }
             }
         }
-
         private void SavePassword(string filePath, string password)
         {
             try
