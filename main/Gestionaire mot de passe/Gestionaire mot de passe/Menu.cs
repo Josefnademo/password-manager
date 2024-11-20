@@ -7,7 +7,7 @@ namespace Gestionaire_mot_de_passe
     public class Menu
     {
         public static string basePath = AppDomain.CurrentDomain.BaseDirectory;
-        public static string PasswordPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\..\..\password"));
+        public static string PasswordPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\..\..\passwords"));
 
         // Character array for password generation
         private char[] symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_=+[]{};:'\",.<>?/|\\`~".ToCharArray();
@@ -21,54 +21,38 @@ namespace Gestionaire_mot_de_passe
         }
 
         public void DisplayMenu()
-        {
+        {          
+            // Header
+            string header = "Hello and welcome! Please choose one of the options below:";
+            var Padding = (Console.WindowWidth) / 4;
+            var PaddingChoice = (Console.WindowWidth) / 3;
 
-            /* Console.WriteLine(@"
-                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#*++++++*#%@@@@@@@@@@@@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%++++++++++++++===+#@@@@@@@@@@@@@@
-                             @@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@*+++++++++++++++++++++++#@@@@@@@@@@@
-                             @@@@@@@@@@@@@@------=#@@@@@@@@@@@@@*+++++++++++++++++++++++++++#@@@@@@@@@
-                             @@@@@@@@@@@@@@*--------+@@@@@@@@@*+++++++++++++++++=========+++++@@@@@@@@
-                             @@@@@@@@@@@@@@@@#=-----=##=%@@@@#+++++++++++++++++++=---=+=+++++++%@@@@@@
-                             @@@@@@@@@@@@@@@@@@@%#+*%%#---=@%++++++++++++++++++++++=--+=+=++++++@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@%%++--=+++++++++++++++++++++++++=-==++++++++@@@@@
-                             @@@@@@@@@@@%#*#+*-------=#=---+++++++**+++++++++++++++++++++++++++++#@@@@
-                             @@@@%-----=--=+*-------=#%#+-=++++*+==+%+=+++++++++++++++++++++++++++@@@@
-                             @@@%-------=*+++-----==+*---+++++*+*#*-%%===+++++++++++++++++++++++++@@@@
-                             @@@+----==++==------=+-=-------+===##%%@%=====+++++++++++++++++++++++@@@@
-                             @@@@%#@@@@@@@@@@#=--=*=-=---===*====+*##*==++++++++++++++++++++++++++@@@@
-                             @@@@@@@@@%%#*=---=====+*+===--==+=====++==+++++++++++++++++++++++++++@@@@
-                             @@@@@@@@----=------============-=+======++++++++++++++++++++++++++++#@@@@
-                             @@@@@@@------=========+*++++==+*+++======++++++++++++++++++++++++++*@@@@@
-                             @@@@@@#=---*###%%@@@@@@@@@@@@%*===++====++==+**+++++++++++++++++++*@@@@@@
-                             @@@@@@@%%@@@@@@@@@@@@@@@@@@@%%%#=#@%*+##++%+=+++++**+++++++++++++*@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@@+--+#%%@@@@**##%%@@****++++++++++++++++%@@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@+-----#@@@@@@@#*++*#***+**********+=-+%@@@@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@#---=*@@@@@@@@@@@@@#++************+==*@@@@@@@@@@@@
-                             @@@@@@@@@@@@@@@@@@@@@@@@#*%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@@@@");*/
-            string[] menuOptions = new string[] { "1.  Consulter un mot de passe", "2.  Ajouter un mot de passe", "3.  Supprimer un mot de passe", "4.  Quitter le programme" };
+            string[] menuOptions = new string[] { "1.  Consulter un mot de passe",
+                                                  "2.  Ajouter un mot de passe", 
+                                                  "3.  Supprimer un mot de passe", 
+                                                  "4.  Quitter le programme" };
             int menuSelect = 0;
 
             while (true)
             {
                 Console.Clear();
                 Console.CursorVisible = false;
-                Console.WriteLine("Hello and welcome! Please choose type of registration:");
+                Console.WriteLine(new string(' ', Padding) + header + "\n");
 
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
-                    Console.WriteLine((i == menuSelect ? "  -->   " : "") + menuOptions[i] + (i == menuSelect ? "   <--" : ""));
+                    Console.WriteLine(new string(' ', PaddingChoice) +(i == menuSelect ? "  -->" : "") + menuOptions[i] + (i == menuSelect ? "   <--" : ""));
                 }
 
                 //detecte key pressed,like(this key, which is pressed, will be the value of "keyPressed" variable).
                 var keyPressed = Console.ReadKey();
 
-                if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != menuOptions.Length - 1)
+
+                if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != menuOptions.Length - 1 || keyPressed.Key == ConsoleKey.S && menuSelect != menuOptions.Length - 1)
                 {
                     menuSelect++;
                 }
-                else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelect >= 1)
+                else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelect >= 1 || keyPressed.Key == ConsoleKey.W && menuSelect >= 1)
                 {
                     menuSelect--;
                 }
