@@ -12,12 +12,24 @@ namespace Gestionaire_mot_de_passe
         // Character array for password generation
         private char[] symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_=+[]{};:'\",.<>?/|\\`~".ToCharArray();
 
-        private string serviceName;
 
+
+        public string[] methodes = new string[] { "Random","Viginère","Créer par soi meme"};
+        public int menuSelect = 0;
+        public string Master;
         public Menu()
         {
             Directory.CreateDirectory(PasswordPath); // Ensure the password directory exists
             DisplayMenu();
+        }
+
+        //class to store User's informations
+        public static class UserInfo
+        {
+            public static string ServiceName;
+            public static string URL;
+            public static string Login;
+            public static string Password;
         }
 
         public void DisplayMenu()
@@ -28,10 +40,9 @@ namespace Gestionaire_mot_de_passe
             var PaddingChoice = (Console.WindowWidth) / 3;
 
             string[] menuOptions = new string[] { "1.  Consulter un mot de passe",
-                                                  "2.  Ajouter un mot de passe", 
-                                                  "3.  Supprimer un mot de passe", 
+                                                  "2.  Ajouter un mot de passe",
+                                                  "3.  Supprimer un mot de passe",
                                                   "4.  Quitter le programme" };
-            int menuSelect = 0;
 
             while (true)
             {
@@ -80,7 +91,7 @@ namespace Gestionaire_mot_de_passe
 
                         //4.Quitter le programme
                         case 3:
-                            Environment.Exit(0);
+                            Environment.Exit(0); 
                             break;
 
                             //rien
@@ -95,50 +106,123 @@ namespace Gestionaire_mot_de_passe
                 }
             }
         }
-
-        private void AddPassword()
-        {
-            Console.WriteLine("Pour quel service voulez-vous créer un mot de passe? : ");
-            serviceName = Console.ReadLine();
-            string passwordFilePath = Path.Combine(PasswordPath, $"{serviceName}.txt");
-
-            string newPassword = GenerateRandomPassword(12); // Generate a password with 12 characters
-            SavePassword(passwordFilePath, newPassword);
-
-            Console.WriteLine($"Mot de passe pour {serviceName} a été créé : {newPassword}");
-            Console.ReadKey();//ajoute
-            DisplayMenu();//ajoute
-        }
-
         private void ViewPassword()
         {
-            //string password = File.ReadAllText(string filePath);
+            var Padding = (Console.WindowWidth) / 4;
+            var PaddingChoice = (Console.WindowWidth) / 3;
 
-           // Console.WriteLine($"{serviceName} : {password}    ");
+            //Console.WriteLine($"{serviceName} : {password}    ");
             Console.WriteLine("Entrez le nom du service pour consulter le mot de passe : ");
-            serviceName = Console.ReadLine();
-            string passwordFilePath = Path.Combine(PasswordPath, $"{serviceName}.txt");
+            UserInfo.ServiceName = Console.ReadLine();
+            string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
             LoadPassword(passwordFilePath);
         }
 
+        private void AddPassword()
+        {                                                                                                                                                                                                                          
+            var Padding = (Console.WindowWidth) / 4;
+            var PaddingChoice = (Console.WindowWidth) / 3;
+            var PaddingInfo = (int)(Console.WindowWidth/ 2.5);
+            var PaddingResult = (int)(Console.WindowWidth / 4.5);
+            string header1 = "Quelle méthode de shiffrement vous voulez utiliser? : ";
+            /////////
+
+            while (true)
+            { Console.Clear();
+                Console.CursorVisible = false;
+                Console.WriteLine(new string(' ', Padding) + header1 + "\n");
+
+                for (int i = 0; i < methodes.Length; i++) { Console.WriteLine(new string(' ', PaddingChoice) + (i == menuSelect ? "  -->" : "") + methodes[i] + (i == menuSelect ? "   <--" : "")); }
+
+                //detecte key pressed,like(this key, which is pressed, will be the value of "keyPressed" variable).
+                var keyPressed = Console.ReadKey();
+                if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != methodes.Length - 1 || keyPressed.Key == ConsoleKey.S && menuSelect != methodes.Length - 1) { menuSelect++;}
+                else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelect >= 1 || keyPressed.Key == ConsoleKey.W && menuSelect >= 1) { menuSelect--; }
+                else if (keyPressed.Key == ConsoleKey.Enter || keyPressed.Key == ConsoleKey.Spacebar)
+                {
+                    switch (menuSelect)
+                    {
+                        //1.  Random
+                        case 0:
+                            Console.Clear();
+                            Console.Write(new string(' ', PaddingChoice) + ("Pour quel service voulez-vous créer un mot de passe? : "));
+                            UserInfo.ServiceName = Console.ReadLine();
+                            string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
+
+                            UserInfo.Password = GenerateRandomPassword(12); // Generate a password with 12 characters
+                            SavePassword(passwordFilePath, UserInfo.Password);
+
+                            Console.WriteLine(new string(' ', PaddingInfo) + $"Mot de passe pour {UserInfo.ServiceName} a été créé : {UserInfo.Password}");
+                            Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
+                            Console.ReadKey();//ajoute
+                            break;
+
+                        //2.  Viginère
+                        case 1:
+                            Console.Clear();
+                            Console.WriteLine("Cette méthode de chiffrement est en cours de développement.");
+                            Console.WriteLine("Appuyez sur une touche pour revenir au menu principal...");
+                            Console.ReadKey();
+
+                            break;
+
+                        //2.  By your own
+                        case 2:
+                            Console.Clear();
+                            Console.Write(new string(' ', PaddingChoice)+("Pour quel service voulez-vous créer un mot de passe? : "));
+                            UserInfo.ServiceName = Console.ReadLine();
+                            Console.Write(new string(' ', PaddingChoice) + ("Quel est votre Login pour ce service? : "));
+                            UserInfo.URL = Console.ReadLine();
+                            Console.Write(new string(' ', PaddingChoice) + ("*pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
+                            UserInfo.Login = Console.ReadLine();
+                            passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
+
+                            Console.Write(new string(' ', PaddingInfo) +"Tapper votre mot de passe : ");
+                            UserInfo.Password = Console.ReadLine(); // create your own password
+                            SavePassword(passwordFilePath, UserInfo.Password);
+
+                            Console.WriteLine(new string(' ', PaddingInfo)+$"Mot de passe pour {UserInfo.ServiceName} a été créé : {UserInfo.Password}");
+                            Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
+                            Console.ReadKey();//ajoute
+                            break;
+
+                        //rien
+                        default:
+                            /*ajoute*/
+                            Console.WriteLine("Choix invalide, veuillez réessayer.\n \n \n \t\t\t\t***pour recommencer cliquer sur une touche***");
+                            Console.ReadKey();
+                            Console.Clear();
+                            DisplayMenu();
+                            break; /*ajoute*/
+                    }
+                }
+            }
+            Console.ReadKey();//ajoute
+            DisplayMenu();//ajoute
+        }
+
+       
         private void DeletePassword()
         {
             Console.WriteLine("Entrez le nom du service à supprimer : ");
-            serviceName = Console.ReadLine();
+            UserInfo.ServiceName = Console.ReadLine();
 
-            string passwordFilePath = Path.Combine(PasswordPath, $"{serviceName}.txt");
+            string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
             if (File.Exists(passwordFilePath))
             {
                 File.Delete(passwordFilePath);
-                Console.WriteLine($"Le mot de passe pour {serviceName} a été supprimé.");
+                Console.WriteLine($"Le mot de passe pour {UserInfo.ServiceName} a été supprimé.");
                 Console.ReadKey();
                 DisplayMenu();
             }
             else
-            {                
-                string[] menuOptions = new string[] { "Oui", "Non" };
+            {
+                var Padding = (Console.WindowWidth) / 4;
+                var PaddingChoice = (Console.WindowWidth) / 3;
+
+                string[] Options = new string[] { "  Oui", "  Non" };
                 int menuSelectDelete = 0;
 
                 while (true)
@@ -148,15 +232,16 @@ namespace Gestionaire_mot_de_passe
                     Console.CursorVisible = false;
                     
 
-                    for (int i = 0; i < menuOptions.Length; i++)
+
+                    for (int i = 0; i < Options.Length; i++)
                     {
-                        Console.WriteLine((i == menuSelectDelete ? "\t\t\t\t\t-->  " : "") + menuOptions[i] + (i == menuSelectDelete ? "   <--" : ""));
+                        Console.WriteLine(new string(' ', PaddingChoice) + (i == menuSelectDelete ? "  -->" : "") + Options[i] + (i == menuSelectDelete ? "  <--" : ""));
                     }
 
                     //detecte key pressed,like(this key, which is pressed, will be the value of "keyPressed" variable).
                     var keyPressed = Console.ReadKey();
 
-                    if (keyPressed.Key == ConsoleKey.DownArrow && menuSelectDelete != menuOptions.Length - 1)
+                    if (keyPressed.Key == ConsoleKey.DownArrow && menuSelectDelete != Options.Length - 1)
                     {
                         menuSelectDelete++;
                     }
@@ -188,7 +273,15 @@ namespace Gestionaire_mot_de_passe
         {
             try
             {
-                File.WriteAllText(filePath, password);
+                string content = $"Service: {UserInfo.ServiceName}\nURL: {UserInfo.URL}\nLogin: {UserInfo.Login}\nPassword: {UserInfo.Password}";
+                File.WriteAllText(filePath, content);
+
+                /* // Преобразование в JSON
+                 string jsonContent = System.Text.Json.JsonSerializer.Serialize(passwordData);
+
+                 // Запись в файл
+                 File.WriteAllText(filePath, jsonContent);
+                 Console.WriteLine("Mot de passe sauvegardé avec succès en format JSON.");*/
             }
             catch (Exception ex)
             {
