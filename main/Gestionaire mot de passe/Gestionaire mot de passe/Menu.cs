@@ -14,7 +14,7 @@ namespace Gestionaire_mot_de_passe
 
 
 
-        public string[] methodes = new string[] { "Random","Viginère","Créer par soi meme"};
+        public string[] methodes = new string[] { "Random","Viginère","Créer par soi meme","Accueil"};
         public int menuSelect = 0;
         public string Master;
         public Menu()
@@ -172,10 +172,12 @@ namespace Gestionaire_mot_de_passe
                             Console.Clear();
                             Console.Write(new string(' ', PaddingChoice)+("Pour quel service voulez-vous créer un mot de passe? : "));
                             UserInfo.ServiceName = Console.ReadLine();
+
                             Console.Write(new string(' ', PaddingChoice) + ("Quel est votre Login pour ce service? : "));
-                            UserInfo.URL = Console.ReadLine();
-                            Console.Write(new string(' ', PaddingChoice) + ("*pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
                             UserInfo.Login = Console.ReadLine();
+                            
+                            Console.Write(("\t\t *pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
+                            UserInfo.URL = Console.ReadLine();
                             passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
                             Console.Write(new string(' ', PaddingInfo) +"Tapper votre mot de passe : ");
@@ -185,6 +187,13 @@ namespace Gestionaire_mot_de_passe
                             Console.WriteLine(new string(' ', PaddingInfo)+$"Mot de passe pour {UserInfo.ServiceName} a été créé : {UserInfo.Password}");
                             Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
                             Console.ReadKey();//ajoute
+                            break;
+
+
+                        //2.  Back
+                        case 3:
+                            Console.Clear();
+                            DisplayMenu();
                             break;
 
                         //rien
