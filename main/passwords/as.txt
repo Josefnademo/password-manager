@@ -1,4 +1,4 @@
 Service: as
-URL: ass
-Login: _Httpsèpadmfàoagàsmg
-Password: as123
+URL: as
+Login: as
+Password: 13TtOkL?5/h'

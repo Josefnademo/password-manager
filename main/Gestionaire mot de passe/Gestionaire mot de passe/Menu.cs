@@ -17,6 +17,9 @@ namespace Gestionaire_mot_de_passe
         public string[] methodes = new string[] { "Random","Viginère","Créer par soi meme","Accueil"};
         public int menuSelect = 0;
         public string Master;
+
+
+
         public Menu()
         {
             Directory.CreateDirectory(PasswordPath); // Ensure the password directory exists
@@ -111,13 +114,15 @@ namespace Gestionaire_mot_de_passe
             var Padding = (Console.WindowWidth) / 4;
             var PaddingChoice = (Console.WindowWidth) / 3;
 
-            //Console.WriteLine($"{serviceName} : {password}    ");
-            Console.WriteLine("Entrez le nom du service pour consulter le mot de passe : ");
+            //Console.WriteLine($"{UserInfo.ServiceName} : {UserInfo.Password}    ");
+            Console.Write(new string(' ',Padding)+("Entrez le nom du service pour consulter le mot de passe : "));
             UserInfo.ServiceName = Console.ReadLine();
+            
             string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
             LoadPassword(passwordFilePath);
         }
+
 
         private void AddPassword()
         {                                                                                                                                                                                                                          
@@ -148,12 +153,19 @@ namespace Gestionaire_mot_de_passe
                             Console.Clear();
                             Console.Write(new string(' ', PaddingChoice) + ("Pour quel service voulez-vous créer un mot de passe? : "));
                             UserInfo.ServiceName = Console.ReadLine();
+
+                            Console.Write(new string(' ', PaddingChoice) + ("Quel est votre Login pour ce service? : "));
+                            UserInfo.Login = Console.ReadLine();
+
+                            Console.Write(("\t\t *pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
+                            UserInfo.URL = Console.ReadLine();
+
                             string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
                             UserInfo.Password = GenerateRandomPassword(12); // Generate a password with 12 characters
                             SavePassword(passwordFilePath, UserInfo.Password);
 
-                            Console.WriteLine(new string(' ', PaddingInfo) + $"Mot de passe pour {UserInfo.ServiceName} a été créé : {UserInfo.Password}");
+                            Console.WriteLine(new string(' ', PaddingInfo) + $"Mot de passe pour -{UserInfo.ServiceName}- a été créé : {UserInfo.Password}\n\n\n");
                             Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
                             Console.ReadKey();//ajoute
                             break;
@@ -178,13 +190,15 @@ namespace Gestionaire_mot_de_passe
                             
                             Console.Write(("\t\t *pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
                             UserInfo.URL = Console.ReadLine();
+
                             passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
 
                             Console.Write(new string(' ', PaddingInfo) +"Tapper votre mot de passe : ");
                             UserInfo.Password = Console.ReadLine(); // create your own password
+
                             SavePassword(passwordFilePath, UserInfo.Password);
 
-                            Console.WriteLine(new string(' ', PaddingInfo)+$"Mot de passe pour {UserInfo.ServiceName} a été créé : {UserInfo.Password}");
+                            Console.WriteLine(new string(' ', PaddingInfo)+$"Mot de passe pour -{UserInfo.ServiceName}- a été créé : {UserInfo.Password}\n\n\n");
                             Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
                             Console.ReadKey();//ajoute
                             break;
@@ -214,6 +228,9 @@ namespace Gestionaire_mot_de_passe
        
         private void DeletePassword()
         {
+           
+            var PaddingResult = (int)(Console.WindowWidth / 4.5);
+
             Console.WriteLine("Entrez le nom du service à supprimer : ");
             UserInfo.ServiceName = Console.ReadLine();
 
@@ -222,7 +239,7 @@ namespace Gestionaire_mot_de_passe
             if (File.Exists(passwordFilePath))
             {
                 File.Delete(passwordFilePath);
-                Console.WriteLine($"Le mot de passe pour {UserInfo.ServiceName} a été supprimé.");
+                Console.WriteLine(new string(' ', PaddingResult) + ($"\n\n\nLe mot de passe pour -{UserInfo.ServiceName}- a été supprimé."));
                 Console.ReadKey();
                 DisplayMenu();
             }
@@ -300,21 +317,33 @@ namespace Gestionaire_mot_de_passe
 
         private void LoadPassword(string filePath)
         {
+            var PaddingInfo = (int)(Console.WindowWidth / 2.5);
+            var PaddingResult = (int)(Console.WindowWidth / 4.5);
             try
             {
-                if (File.Exists(filePath))
+                if (File.Exists(filePath))// if there is a wanted service, programme load the data ,so those infos are going to be showed
                 {
                     string password = File.ReadAllText(filePath);
-                    Console.WriteLine($"Mot de passe chargé : {password}");
+                    Console.WriteLine(new string(' ', PaddingInfo) + ($"Non de service : {UserInfo.ServiceName}"));
+                    Console.WriteLine(new string(' ', PaddingInfo) + ($"Login du compte : {UserInfo.Login}"));
+                    Console.WriteLine(new string(' ', PaddingInfo) + ($"Mot de passe du compte: {UserInfo.Password}"));
+                    Console.WriteLine(new string(' ', PaddingInfo) + ($"Lien du service : {UserInfo.URL}"));
+                    Console.ReadLine();
+
+                    Console.WriteLine(new string(' ', PaddingResult) +("Appuyez sur une touche pour revenir au menu principal..."));
+                    Console.ReadKey();
+
                 }
-                else
+                else    // if there is wanted no service, programme can't load the data ,so this line of code is going to be executed
                 {
                     Console.WriteLine("Aucun mot de passe trouvé pour ce service.");
+                    Console.ReadLine();
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)//exeption if programme can't load the data this line of code is going to be executed
             {
                 Console.WriteLine($"Erreur lors du chargement du mot de passe : {ex.Message}");
+                Console.ReadLine();
             }
         }
 

@@ -1,4 +1,0 @@
-Service: ass
-URL: hhtps
-Login: reci
-Password: reci123
