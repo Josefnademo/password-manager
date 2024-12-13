@@ -1,0 +1,4 @@
+Service: tg
+URL: tghhtp
+Login: reci
+Password: *2ymZw,M;))]

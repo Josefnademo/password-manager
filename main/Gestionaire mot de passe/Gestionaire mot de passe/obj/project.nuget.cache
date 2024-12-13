@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "dHt7v+krcRYJY8ZfGcRP+i06hPr/odNKTNqxAXc6ytKuuyyWvpFSilth//dBzsu/I7SGySYsCI/SQ0nel2ByyA==",
+  "dgSpecHash": "leTHpzbC7DI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\yosnademo\\Documents\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire mot de passe\\Gestionaire mot de passe.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\hdjdj\\OneDrive\\Документи\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire mot de passe\\Gestionaire mot de passe.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hdjdj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\hdjdj\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\hdjdj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\hdjdj\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.36\\microsoft.netcore.app.host.win-x64.6.0.36.nupkg.sha512"
+  ],
   "logs": []
 }

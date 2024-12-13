@@ -1,4 +1,0 @@
-Service: as
-URL: as
-Login: as
-Password: 13TtOkL?5/h'
