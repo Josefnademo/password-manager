@@ -1,0 +1,4 @@
+Nom du service: Pinterest
+Lien du service: https://www.pinterest.com/
+Login du compte: user_pt
+Mot de passe du compte: ptpassword123

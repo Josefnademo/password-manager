@@ -1,0 +1,4 @@
+Nom du service: LinkedIn
+Lien du service: https://www.linkedin.com/
+Login du compte: user_ln
+Mot de passe du compte: lnpassword123

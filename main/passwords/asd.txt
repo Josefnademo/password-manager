@@ -1,4 +1,0 @@
-Service: asd
-URL: aasdht
-Login: asdd
-Password: dasdasdas

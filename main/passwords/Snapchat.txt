@@ -1,0 +1,4 @@
+Nom du service: Snapchat
+Lien du service: https://www.snapchat.com/
+Login du compte: user_sc
+Mot de passe du compte: scpassword123

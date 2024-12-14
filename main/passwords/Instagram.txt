@@ -1,0 +1,4 @@
+Nom du service: Instagram
+Lien du service: https://www.instagram.com/
+Login du compte: user_ig
+Mot de passe du compte: igpassword123

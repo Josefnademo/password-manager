@@ -1,0 +1,4 @@
+Nom du service: WhatsApp
+Lien du service: https://www.whatsapp.com/
+Login du compte: user_wp
+Mot de passe du compte: wppassword123

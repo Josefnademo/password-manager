@@ -1,0 +1,7 @@
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.AssemblyReference.cache
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.CoreCompileInputs.cache
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.exe.config
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.exe
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.pdb
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.exe
+C:\Users\hdjdj\OneDrive\Документи\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.pdb

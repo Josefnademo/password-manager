@@ -1,0 +1,4 @@
+Nom du service: YouTube
+Lien du service: https://www.youtube.com/
+Login du compte: user_yt
+Mot de passe du compte: ytpassword123

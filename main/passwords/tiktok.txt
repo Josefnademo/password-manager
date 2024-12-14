@@ -1,4 +1,4 @@
-Service: tiktok
-URL: hhtps tiki
-Login: tiktokiii
-Password: tikitoki123
+Nom du service: TikTok
+Lien du service: https://www.tiktok.com/
+Login du compte: user_tt
+Mot de passe du compte: tikitoki123
