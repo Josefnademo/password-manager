@@ -210,7 +210,7 @@ namespace Gestionaire_mot_de_passe
                 Console.WriteLine(new string(' ', PaddingInfo) + $"{i + 1}. {serviceName}");
             }
 
-            Console.WriteLine(new string(' ', PaddingResult) + "\nEntrez le numéro du service que vous souhaitez consulter :");
+            Console.Write(new string(' ', PaddingResult) + "\nEntrez le numéro du service que vous souhaitez consulter : ");
 
             // Read user's choosen option
             if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= passwordFiles.Length) //write result in int "choice"
@@ -220,10 +220,21 @@ namespace Gestionaire_mot_de_passe
             }
             else
             {
-                Console.WriteLine(new string(' ', PaddingResult) + "\t\tNuméro de service invalide.");
-                Console.WriteLine(new string(' ', PaddingResult) + "Appuyez sur n'importe quelle touche pour revenir.");
-                Console.ReadKey();
-                DisplayMenu();
+                NoYes(menuSelect =>
+                {
+                    switch (menuSelect)
+                    {
+                        case 0: // Oui
+                            Console.Clear();
+                            ViewPassword();
+                            return true; // completing the execution
+                        case 1: // Non
+                            Console.Clear();
+                            DisplayMenu();
+                            return true; // completing the execution
+                    }
+                    return false; // Продолжаем цикл
+                });
             }
         }
 
@@ -363,37 +374,6 @@ namespace Gestionaire_mot_de_passe
               //  DisplayMenu();//ajoute
             }
 
-      
-        private void DeletePassword()
-         {
-             int Padding = Console.WindowWidth / 4;
-             int PaddingChoice = Console.WindowWidth / 3;
-             int PaddingResult = (int)(Console.WindowWidth / 4.5);
-
-             Console.WriteLine(new string(' ', Padding) + "Choose a file to delete:");
-
-             var files = Directory.GetFiles(PasswordPath, "*.txt");
-             for (int i = 0; i < files.Length; i++)
-             {
-                 Console.WriteLine(new string(' ', Padding) + $"{i + 1}. {Path.GetFileName(files[i])}");
-             }
-
-             Console.Write(new string(' ', PaddingResult) + "\nEnter the number of the file you want to delete: ");
-
-             if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= files.Length)
-             {
-                 passwordFilePath = files[choice - 1];
-                 ConfirmDeletePassword();
-             }
-             else
-             {
-                 Console.WriteLine(new string(' ', PaddingResult) + "\t\tInvalid file number.");
-                 Console.ReadKey();
-                 Console.Clear();
-                 DeletePassword();
-             }
-         }
-
         private void SavePassword(string filePath, string password)
             {
                 try
@@ -414,14 +394,105 @@ namespace Gestionaire_mot_de_passe
                 }
             }
 
-          
 
-            /// <summary>
-            /// Random password generator
-            /// </summary>
-            /// <param name="length"></param>
-            /// <returns></returns>
-            private string GenerateRandomPassword(int length)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DeletePassword()
+        {
+            int Padding = Console.WindowWidth / 4;
+            int PaddingChoice = Console.WindowWidth / 3;
+            int PaddingResult = (int)(Console.WindowWidth / 4.5);
+
+            Console.WriteLine(new string(' ', Padding) + "Choose a file to delete:");
+
+            var files = Directory.GetFiles(PasswordPath, "*.txt");
+            for (int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(new string(' ', Padding) + $"{i + 1}. {Path.GetFileName(files[i])}");
+            }
+
+            Console.Write(new string(' ', PaddingResult) + "\nEnter the number of the file you want to delete: ");
+
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= files.Length)
+            {
+                passwordFilePath = files[choice - 1];
+                ConfirmDeletePassword();
+            }
+            else
+            {
+                NoYes(menuSelect =>
+                {
+                    switch (menuSelect)
+                    {
+                        case 0: // Oui
+                            Console.Clear();
+                            DeletePassword();
+                            return true; // completing the execution
+                        case 1: // Non
+                            Console.Clear();
+                            DisplayMenu();
+                            return true; // completing the execution
+                    }
+                    return false; // Продолжаем цикл
+                });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
+        private void NoYes(Func<int, bool> action)
+        {
+            var PaddingChoice = Console.WindowWidth / 3;
+            string[] Options = new string[] { "  Oui", "  Non" };
+            int menuSelect = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\t\t\tAucun mot de passe trouvé pour ce service. Essayer un autre nom? ");
+                Console.CursorVisible = false;
+
+                for (int i = 0; i < Options.Length; i++)
+                {
+                    Console.WriteLine(new string(' ', PaddingChoice) + (i == menuSelect ? "  -->" : "") + Options[i] + (i == menuSelect ? "  <--" : ""));
+                }
+
+                var keyPressed = Console.ReadKey();
+
+                if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != Options.Length - 1)
+                {
+                    menuSelect++;
+                }
+                else if (keyPressed.Key == ConsoleKey.UpArrow && menuSelect >= 1)
+                {
+                    menuSelect--;
+                }
+                else if (keyPressed.Key == ConsoleKey.Enter || keyPressed.Key == ConsoleKey.Spacebar)
+                {
+                    switch (menuSelect)
+                    {
+                        case 0: // Oui
+                            Console.Clear();
+                            ViewPassword();
+                            return;
+                        case 1: // Non
+                            Console.Clear();
+                            DisplayMenu();
+                            return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Random password generator
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private string GenerateRandomPassword(int length)
             {
                 Random rand = new Random();
                 char[] password = new char[length];

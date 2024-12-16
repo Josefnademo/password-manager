@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\hdjdj\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\",
+  "WorkspaceRootPath": "C:\\Users\\pn25kdv\\Documents\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{45698D0D-EEAA-4BA9-B30A-BB1441CA42AE}|Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe.csproj|c:\\users\\hdjdj\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\github\\password-manager\\main\\gestionaire mot de passe\\gestionaire_mot_de_passe\\gestionaire_mot_de_passe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{45698D0D-EEAA-4BA9-B30A-BB1441CA42AE}|Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe.csproj|c:\\users\\pn25kdv\\documents\\github\\password-manager\\main\\gestionaire mot de passe\\gestionaire_mot_de_passe\\gestionaire_mot_de_passe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{45698D0D-EEAA-4BA9-B30A-BB1441CA42AE}|Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe.csproj|solutionrelative:gestionaire_mot_de_passe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\hdjdj\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe\\Program.cs",
               "RelativeDocumentMoniker": "Gestionaire_mot_de_passe\\Program.cs",
-              "ToolTip": "C:\\Users\\hdjdj\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe\\Program.cs",
+              "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\password-manager\\main\\Gestionaire mot de passe\\Gestionaire_mot_de_passe\\Gestionaire_mot_de_passe\\Program.cs",
               "RelativeToolTip": "Gestionaire_mot_de_passe\\Program.cs",
-              "ViewState": "AgIAAHcBAAAAAAAAAAAEwIUBAABgAAAAAAAAAA==",
+              "ViewState": "AQIAAKQBAAAAAAAAAADwv7kBAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-14T19:07:22.857Z",
               "EditorCaption": ""

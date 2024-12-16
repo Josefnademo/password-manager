@@ -1,4 +1,0 @@
-Nom du service: Reddit
-Lien du service: https://www.reddit.com/
-Login du compte: user_rd
-Mot de passe du compte: rdpassword123
