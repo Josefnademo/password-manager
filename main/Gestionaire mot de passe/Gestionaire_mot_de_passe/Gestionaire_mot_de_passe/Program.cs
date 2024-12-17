@@ -1,4 +1,45 @@
-﻿using System;
+﻿/****************************************************************************** 
+** CLASS       Enemy                                                          ** 
+**                                                                           ** 
+** Lieu       : ETML - section informatique                                   ** 
+** Auteur     : Yosef Nademo                                                  ** 
+** Date       : 17.12.2024                                                    ** 
+**                                                                           ** 
+** Modifications                                                             ** 
+**   Auteur   :                                                               ** 
+**   Version  :                                                               ** 
+**   Date     :                                                               ** 
+**   Raisons  :                                                               ** 
+**                                                                           ** 
+**                                                                           ** 
+******************************************************************************/
+
+/****************************************************************************************************** 
+** DESCRIPTION                                                                                     ** 
+**   ** 
+**     ** 
+** 
+** 
+** 
+** PRINCIPALES FONCTIONNALITÉS
+** - 
+** - 
+** - 
+** - 
+  
+** MÉTHODES PRINCIPALES   
+** 
+**
+** 
+**   
+  
+** ** 
+**                     ** 
+******************************************************************************************************/
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +63,8 @@ namespace Gestionaire_mot_de_passe
 
             private char[] symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_=+[]{};:'\",.<>?/|\\`~".ToCharArray(); // Character array for password generation //all charaters for crypting
 
-            public string[] methodes = new string[] { "Random", "Viginère", "Créer par soi meme", "Accueil" };
+            public string[] methodes = new string[] { "Random", "Viginère", "Créer par soi meme", "Accueil" };        //possible methods to create a password
             public int menuSelect = 0;                                                                                //Your option choosen               
-            public string Master;                                                                                     //master password
             public string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");               //password's  (files)
 
             public Menu()
@@ -34,7 +74,7 @@ namespace Gestionaire_mot_de_passe
             }
 
             /// <summary>
-            /// class to store User's informations
+            /// class to store and share user information between methods 
             /// </summary>
             public static class UserInfo
             {
@@ -42,11 +82,12 @@ namespace Gestionaire_mot_de_passe
                 public static string URL;
                 public static string Login;
                 public static string Password;
+                public static string PasswordDecrypted;
             }
 
 
             /// <summary>
-            /// class to store display basic menu
+            /// Displays the main menu with options for managing passwords.
             /// </summary>
             public void DisplayMenu()
             {
@@ -123,7 +164,9 @@ namespace Gestionaire_mot_de_passe
                 }
             }
 
-          
+            /// <summary>
+            /// Confirms the deletion of a password by asking the user for confirmation.
+            /// </summary>
             private void ConfirmDeletePassword()
             {
             int Padding = Console.WindowWidth / 4;
@@ -179,9 +222,11 @@ namespace Gestionaire_mot_de_passe
                     }
                 }
             }
-        }
+            }
 
-
+        /// <summary>
+        /// Displays a list of saved passwords for the user to view.
+        /// </summary>
         private void ViewPassword()
         {
             var PaddingInfo = (int)(Console.WindowWidth / 2.5);
@@ -192,7 +237,7 @@ namespace Gestionaire_mot_de_passe
             Console.Clear();
             Console.WriteLine(new string(' ', PaddingInfo) + "Vos mots de passe enregistrés:");
 
-            //Get all password's files
+            // Get all password files
             string[] passwordFiles = Directory.GetFiles(PasswordPath, "*.txt");
 
             if (passwordFiles.Length == 0)
@@ -202,8 +247,8 @@ namespace Gestionaire_mot_de_passe
                 DisplayMenu();
                 return;
             }
-          
-            //Show all services
+
+            // Display all services
             for (int i = 0; i < passwordFiles.Length; i++)
             {
                 string serviceName = Path.GetFileNameWithoutExtension(passwordFiles[i]);
@@ -212,7 +257,7 @@ namespace Gestionaire_mot_de_passe
 
             Console.Write(new string(' ', PaddingResult) + "\nEntrez le numéro du service que vous souhaitez consulter : ");
 
-            // Read user's choosen option
+            // Read user's chosen option
             if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= passwordFiles.Length) //write result in int "choice"
             {
                 string selectedFile = passwordFiles[choice - 1];
@@ -238,6 +283,10 @@ namespace Gestionaire_mot_de_passe
             }
         }
 
+        /// <summary>
+        /// Loads and displays the content of a selected password file.
+        /// </summary>
+        /// <param name="filePath">The path to the password file.</param>
         private void LoadPasswordFromFile(string filePath)
         {
             var PaddingInfo = (int)(Console.WindowWidth / 2.5);
@@ -272,8 +321,9 @@ namespace Gestionaire_mot_de_passe
         }
 
 
-
-
+        /// <summary>
+        /// Adds a new password to the password manager, allowing the user to choose a method for password creation.
+        /// </summary>
         private void AddPassword()
             {
                 var Padding = (Console.WindowWidth) / 4;
@@ -324,10 +374,50 @@ namespace Gestionaire_mot_de_passe
                             //2.  Viginère
                             case 1:
                                 Console.Clear();
-                                Console.WriteLine("Cette méthode de chiffrement est en cours de développement.");
-                                Console.WriteLine("Appuyez sur une touche pour revenir au menu principal...");
-                                Console.ReadKey();
+                            try
+                            {
+                                Console.Write(new string(' ', PaddingChoice) + ("Pour quel service voulez-vous créer un mot de passe? : "));
+                                UserInfo.ServiceName = Console.ReadLine();
+
+                                Console.Write(new string(' ', PaddingChoice) + ("Quel est votre Login pour ce service? : "));
+                                UserInfo.Login = Console.ReadLine();
+
+                                Console.Write(("\t\t *pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
+                                UserInfo.URL = Console.ReadLine();
+
+                                passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
+
+                                Console.Write("Entrez le mot de passe pour chiffrer: ");
+                                string text = Console.ReadLine();
+
+                                Console.Write("Entrez le master-password (La clé): ");
+                                string key = Console.ReadLine();
+
+                                if (string.IsNullOrWhiteSpace(key) || !VigenereCipher.IsKeyValid(key))
+                                {
+                                    throw new ArgumentException("La clé doit contenir uniquement des lettres et ne pas être vide.");
+                                }
+
+                                string encryptedText = VigenereCipher.Encrypt(text, key);
+                                Console.WriteLine($"mot de passe crypté : {encryptedText}");
+                                UserInfo.Password = encryptedText;
+
+                                string decryptedText = VigenereCipher.Decrypt(encryptedText, key);
+                                Console.WriteLine($"mot de passe decrypté : {decryptedText}");
+
+                                UserInfo.PasswordDecrypted = decryptedText;
+
+                                Console.WriteLine(new string(' ', PaddingInfo) + $"Mot de passe pour -{UserInfo.ServiceName}- a été créé et crypté  : {UserInfo.Password}\n\n\n");
+                                Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
+                                Console.ReadKey();//ajoute
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Une erreur s'est produite : {ex.Message}");
+                            }
+                            Console.ReadKey();
                                 break;
+
 
                             //2.  By your own
                             case 2:
@@ -374,6 +464,9 @@ namespace Gestionaire_mot_de_passe
               //  DisplayMenu();//ajoute
             }
 
+        /// <summary>
+        /// Saves the user-entered password information to a file.
+        /// </summary>
         private void SavePassword(string filePath, string password)
             {
                 try
@@ -396,7 +489,7 @@ namespace Gestionaire_mot_de_passe
 
 
         /// <summary>
-        /// 
+        /// Deletes a password from the password manager based on user confirmation.
         /// </summary>
         private void DeletePassword()
         {
@@ -440,9 +533,10 @@ namespace Gestionaire_mot_de_passe
         }
 
         /// <summary>
-        /// 
+        /// Helper function for Yes/No confirmation prompts
         /// </summary>
-        /// <param name="action"></param>
+        /// <param name="action">The action to perform based on the user's choice (Yes/No).</param>
+        /// <returns>True if an action is completed, false otherwise.</returns>
         private void NoYes(Func<int, bool> action)
         {
             var PaddingChoice = Console.WindowWidth / 3;
@@ -488,10 +582,10 @@ namespace Gestionaire_mot_de_passe
         }
 
         /// <summary>
-        /// Random password generator
-        /// </summary>
+        /// Generates a random password using a specified length and characters.
+        /// </summary> 
         /// <param name="length"></param>
-        /// <returns></returns>
+        /// <returns>A randomly generated password string.</returns>
         private string GenerateRandomPassword(int length)
             {
                 Random rand = new Random();
@@ -505,14 +599,20 @@ namespace Gestionaire_mot_de_passe
             }
         }
 
-    ///////////////////////////////////
-        /// <summary>
-        /// 
-        /// </summary>
-        class VigenereCipher
+    /// <summary>
+    /// Vigenere Cipher class to encrypt and decrypt text using the Vigenere cipher technique.
+    /// </summary>
+    public class VigenereCipher
         {
-            // Метод для шифрования текста
-            public static string Encrypt(string text, string key)
+
+        // Method to encrypt text using the Vigenere cipher
+        /// <summary>
+        /// Encrypts the given text using the Vigenere cipher with the specified key.
+        /// </summary>
+        /// <param name="text">The text to encrypt.</param>
+        /// <param name="key">The key to use for encryption. It should only contain alphabetic characters.</param>
+        /// <returns>The encrypted text.</returns>
+        public static string Encrypt(string text, string key)
             {
                 string result = "";
                 key = key.ToUpper();
@@ -525,25 +625,30 @@ namespace Gestionaire_mot_de_passe
                         bool isUpper = char.IsUpper(character);
                         char offset = isUpper ? 'A' : 'a';
 
-                        // Сдвиг символа с использованием ключа
+                        // Shift character using the key
                         char encryptedChar = (char)((character - offset + (key[keyIndex] - 'A')) % 26 + offset);
                         result += encryptedChar;
 
-                        // Переход к следующей букве ключа
+                        // Move to the next character of the key
                         keyIndex = (keyIndex + 1) % key.Length;
                     }
                     else
                     {
-                        // Если символ не буква, добавляем его без изменений
+                        // If the character is not a letter, add it unchanged
                         result += character;
                     }
                 }
-
                 return result;
-            }
+        }
 
-            // Метод для расшифровки текста
-            public static string Decrypt(string text, string key)
+        // Method to decrypt text using the Vigenere cipher
+        /// <summary>
+        /// Decrypts the given text using the Vigenere cipher with the specified key.
+        /// </summary>
+        /// <param name="text">The text to decrypt.</param>
+        /// <param name="key">The key to use for decryption. It should only contain alphabetic characters.</param>
+        /// <returns>The decrypted text.</returns>
+        public static string Decrypt(string text, string key)
             {
                 string result = "";
                 key = key.ToUpper();
@@ -556,59 +661,36 @@ namespace Gestionaire_mot_de_passe
                         bool isUpper = char.IsUpper(character);
                         char offset = isUpper ? 'A' : 'a';
 
-                        // Обратный сдвиг символа с использованием ключа
+                        // Reverse shift character using the key
                         char decryptedChar = (char)((character - offset - (key[keyIndex] - 'A') + 26) % 26 + offset);
                         result += decryptedChar;
 
-                        // Переход к следующей букве ключа
+                        // Move to the next character of the key
                         keyIndex = (keyIndex + 1) % key.Length;
                     }
                     else
                     {
-                        // Если символ не буква, добавляем его без изменений
-                        result += character;
+                     // If the character is not a letter, add it unchanged
+                     result += character;
                     }
                 }
-
                 return result;
-            }
-
-            // Проверка валидности ключа
-            public static bool IsKeyValid(string key)
-            {
-                foreach (char c in key)
-                {
-                    if (!char.IsLetter(c))
-                        return false;
-                }
-                return true;
-            }
-       /*
-           // static void Main(string[] args)
-            {
-                try
-                {
-                    Console.Write("Введите текст для шифрования: ");
-                    string text = Console.ReadLine();
-
-                    Console.Write("Введите ключ: ");
-                    string key = Console.ReadLine();
-
-                    if (string.IsNullOrWhiteSpace(key) || !IsKeyValid(key))
-                    {
-                        throw new ArgumentException("Ключ должен содержать только буквы и не быть пустым.");
-                    }
-
-                    string encryptedText = Encrypt(text, key);
-                    Console.WriteLine($"Зашифрованный текст: {encryptedText}");
-
-                    string decryptedText = Decrypt(encryptedText, key);
-                    Console.WriteLine($"Расшифрованный текст: {decryptedText}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Произошла ошибка: {ex.Message}");
-                }
-            }*/
         }
+
+        // Method to check if the key is valid
+        /// <summary>
+        /// Checks if the provided key is valid. A valid key should only contain alphabetic characters.
+        /// </summary>
+        /// <param name="key">The key to validate.</param>
+        /// <returns>True if the key is valid, otherwise false.</returns>
+        public static bool IsKeyValid(string key)
+        {
+          foreach (char c in key)
+          {
+              if (!char.IsLetter(c))
+                  return false;
+          }
+          return true;
+        }
+    }
 }

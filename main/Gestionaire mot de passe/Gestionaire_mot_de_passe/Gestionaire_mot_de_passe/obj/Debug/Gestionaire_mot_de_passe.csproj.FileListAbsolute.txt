@@ -12,3 +12,11 @@ C:\Users\pn25kdv\Documents\GitHub\password-manager\main\Gestionaire mot de passe
 C:\Users\pn25kdv\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.CoreCompileInputs.cache
 C:\Users\pn25kdv\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.exe
 C:\Users\pn25kdv\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.pdb
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.exe.config
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.exe
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\bin\Debug\Gestionaire_mot_de_passe.pdb
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.AssemblyReference.cache
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.SuggestedBindingRedirects.cache
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.csproj.CoreCompileInputs.cache
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.exe
+C:\Users\yosnademo\Documents\GitHub\password-manager\main\Gestionaire mot de passe\Gestionaire_mot_de_passe\Gestionaire_mot_de_passe\obj\Debug\Gestionaire_mot_de_passe.pdb
