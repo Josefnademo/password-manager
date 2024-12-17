@@ -1,40 +1,93 @@
-﻿/****************************************************************************** 
+﻿/******************************************************************************* 
 ** CLASS       Enemy                                                          ** 
-**                                                                           ** 
+**                                                                            ** 
 ** Lieu       : ETML - section informatique                                   ** 
 ** Auteur     : Yosef Nademo                                                  ** 
 ** Date       : 17.12.2024                                                    ** 
-**                                                                           ** 
-** Modifications                                                             ** 
+**                                                                            ** 
+** Modifications                                                              ** 
 **   Auteur   :                                                               ** 
 **   Version  :                                                               ** 
 **   Date     :                                                               ** 
 **   Raisons  :                                                               ** 
-**                                                                           ** 
-**                                                                           ** 
-******************************************************************************/
+**                                                                            ** 
+**                                                                            ** 
+*******************************************************************************/
 
 /****************************************************************************************************** 
-** DESCRIPTION                                                                                     ** 
-**   ** 
-**     ** 
-** 
-** 
-** 
-** PRINCIPALES FONCTIONNALITÉS
-** - 
-** - 
-** - 
-** - 
-  
-** MÉTHODES PRINCIPALES   
-** 
-**
-** 
-**   
-  
-** ** 
-**                     ** 
+** DESCRIPTION :                                                                                     ** 
+**   Ce programme implémente un gestionnaire de mots de passe sécurisé en C++.                       ** 
+**   Il permet de stocker, gérer et récupérer des mots de passe de manière sécurisée.                ** 
+**   L'utilisateur peut ajouter, supprimer, rechercher et afficher les mots de passe.                ** 
+**                                                                                                   ** 
+** PRINCIPALES FONCTIONNALITÉS                                                                       ** 
+** - Ajout de nouveaux mots de passe avec un chiffrement sécurisé.                                   ** 
+** - Recherche et récupération d'un mot de passe existant par un identifiant unique.                 ** 
+** - Suppression d'un mot de passe spécifique.                                                       ** 
+** - Affichage de la liste des identifiants enregistrés.                                             ** 
+** - Sauvegarde et chargement des mots de passe depuis un fichier sécurisé.                          ** 
+**                                                                                                   ** 
+** MÉTHODES PRINCIPALES :                                                                            ** 
+**- public Menu()                                                                                    ** 
+**     Initialise l'environnement du programme en s'assurant que le répertoire des mots de passe     ** 
+**     existe et lance l'affichage du menu.                                                          ** 
+**                                                                                                   ** 
+** - public void DisplayMenu()                                                                       ** 
+**     Affiche le menu principal et gère la navigation de l'utilisateur. Permet de sélectionner      ** 
+**     les différentes options grâce aux touches du clavier.                                         ** 
+**                                                                                                   ** 
+** - private void ViewPassword()                                                                     ** 
+**     Affiche une liste des mots de passe enregistrés. Permet à l'utilisateur de sélectionner un    ** 
+**     fichier pour consulter son contenu.                                                           ** 
+**                                                                                                   ** 
+** - private void NoYes(Func<int, bool> action)                                                      ** 
+**     Affiche une confirmation (Oui/Non) pour certaines actions utilisateur.                        ** 
+**     Gère la navigation via les touches fléchées et valide le choix. Retourne au menu ou           ** 
+**     lance l'action en conséquence.                                                                ** 
+**                                                                                                   ** 
+** - private void LoadPasswordFromFile(string filePath)                                              ** 
+**     Charge et affiche le contenu d'un fichier de mot de passe sélectionné. Gère les erreurs       ** 
+**     si le fichier est manquant ou mal formaté.                                                    ** 
+**                                                                                                   ** 
+** - private void GenerateRandomPassword(int length)                                                 ** 
+**     Génère un mot de passe aléatoire en fonction de la longueur spécifiée et d'une liste          ** 
+**     de symboles prédéfinis. Retourne une chaîne de caractères contenant le mot de passe.          ** 
+**                                                                                                   ** 
+**      - private void DeletePassword()                                                              ** 
+**     Permet à l'utilisateur de choisir un fichier de mot de passe à supprimer.                     ** 
+**     Affiche les fichiers disponibles, demande la confirmation pour supprimer le fichier choisi,   ** 
+**     et retourne au menu principal si l'utilisateur annule l'action.                               **   
+**                                                                                                   ** 
+** - private void AddPassword()                                                                      ** 
+**     Permet à l'utilisateur de créer un nouveau mot de passe en choisissant l'une des méthodes     ** 
+**     proposées (aléatoire, chiffrement Vigenère ou manuel). Sauvegarde ensuite le mot de passe.    ** 
+**     Gère les saisies et les validations pour chaque option choisie.                               ** 
+**                                                                                                   ** 
+** - private void SavePassword(string filePath, string password)                                     ** 
+**     Sauvegarde les informations d'un mot de passe dans un fichier texte, y compris les détails    ** 
+**     comme le nom du service, l'URL, le login, ainsi que la version chiffrée si applicable.        ** 
+**     Gère les erreurs de sauvegarde en cas de problème d'accès au fichier.                         ** 
+**                                                                                                   ** 
+** - private void ConfirmDeletePassword()                                                            ** 
+**     Supprime un fichier de mot de passe après confirmation. Si le fichier n'existe pas, propose   ** 
+**     à l'utilisateur de réessayer ou de revenir au menu principal.                                 ** 
+**                                                                                                   **
+**\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\** 
+**                                                                                                   **
+** - public static string Encrypt(string text, string key)                                           ** 
+**     Encrypte le texte donné en utilisant le chiffrement Vigenère avec la clé spécifiée.           ** 
+**     La clé doit uniquement contenir des caractères alphabétiques.                                 ** 
+**     Retourne le texte chiffré.                                                                    ** 
+**                                                                                                   ** 
+** - public static string Decrypt(string text, string key)                                           ** 
+**     Décrypte le texte donné en utilisant le chiffrement Vigenère avec la clé spécifiée.           ** 
+**     La clé doit uniquement contenir des caractères alphabétiques.                                 ** 
+**     Retourne le texte déchiffré.                                                                  ** 
+**                                                                                                   ** 
+** - public static bool IsKeyValid(string key)                                                       ** 
+**     Vérifie si la clé fournie est valide. Une clé valide ne doit contenir que des caractères      ** 
+**     alphabétiques. Retourne `true` si la clé est valide, sinon `false`.                           ** 
+**                                                                                                   ** 
 ******************************************************************************************************/
 
 
@@ -82,7 +135,8 @@ namespace Gestionaire_mot_de_passe
                 public static string URL;
                 public static string Login;
                 public static string Password;
-                public static string PasswordDecrypted;
+                public static string PasswordEncrypted;
+                public static string key;
             }
 
 
@@ -278,7 +332,7 @@ namespace Gestionaire_mot_de_passe
                             DisplayMenu();
                             return true; // completing the execution
                     }
-                    return false; // Продолжаем цикл
+                    return false; // Let's continue the cycle
                 });
             }
         }
@@ -303,15 +357,25 @@ namespace Gestionaire_mot_de_passe
 
             string[] lines = File.ReadAllLines(filePath);
 
-            if (lines.Length >= 4)
+            if (lines.Length >= 6) //for files with ecryption method
             {
                 Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[0]}");
                 Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[1]}");
                 Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[2]}");
                 Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[3]}");
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[4]}");
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[5]}");
             }
-            else
+            else if(lines.Length >= 4)//for files without ecryption method
             {
+
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[0]}");
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[1]}");
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[2]}");
+                Console.WriteLine(new string(' ', PaddingInfo) + $"{lines[3]}"); 
+            }
+            
+            else{
                 Console.WriteLine(new string(' ', PaddingInfo) + "Le format du fichier est incorrect.");
             }
 
@@ -385,8 +449,6 @@ namespace Gestionaire_mot_de_passe
                                 Console.Write(("\t\t *pas obligatoire*      Quel est URL de son site web? (sinon, juste mettez un 'Espace': "));
                                 UserInfo.URL = Console.ReadLine();
 
-                                passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
-
                                 Console.Write("Entrez le mot de passe pour chiffrer: ");
                                 string text = Console.ReadLine();
 
@@ -400,12 +462,15 @@ namespace Gestionaire_mot_de_passe
 
                                 string encryptedText = VigenereCipher.Encrypt(text, key);
                                 Console.WriteLine($"mot de passe crypté : {encryptedText}");
-                                UserInfo.Password = encryptedText;
+                                UserInfo.PasswordEncrypted = encryptedText;
 
                                 string decryptedText = VigenereCipher.Decrypt(encryptedText, key);
                                 Console.WriteLine($"mot de passe decrypté : {decryptedText}");
+                                UserInfo.Password = decryptedText;
+                                UserInfo.key = key;
 
-                                UserInfo.PasswordDecrypted = decryptedText;
+                                passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
+                                SavePassword(passwordFilePath, UserInfo.Password);
 
                                 Console.WriteLine(new string(' ', PaddingInfo) + $"Mot de passe pour -{UserInfo.ServiceName}- a été créé et crypté  : {UserInfo.Password}\n\n\n");
                                 Console.WriteLine(new string(' ', PaddingResult) + ("Tout etiat sauvgarder avec succses! Maintenant appuyez sur une touche pour continuer..."));
@@ -451,17 +516,14 @@ namespace Gestionaire_mot_de_passe
 
                             //rien
                             default:
-                                /*ajoute*/
                                 Console.WriteLine("Choix invalide, veuillez réessayer.\n \n \n \t\t\t\t***pour recommencer cliquer sur une touche***");
                                 Console.ReadKey();
                                 Console.Clear();
                                 DisplayMenu();
-                                break; /*ajoute*/
+                                break; 
                         }
                     }
                 }
-               // Console.ReadKey();//ajoute
-              //  DisplayMenu();//ajoute
             }
 
         /// <summary>
@@ -471,7 +533,7 @@ namespace Gestionaire_mot_de_passe
             {
                 try
                 {
-                    string content = $"Nom du service: {UserInfo.ServiceName}\nLien du service : {UserInfo.URL}\nLogin du compte : {UserInfo.Login}\nMot de passe du compte : {UserInfo.Password}";
+                    string content = $"Nom du service: {UserInfo.ServiceName}\nLien du service : {UserInfo.URL}\nLogin du compte : {UserInfo.Login}\nMot de passe du compte : {UserInfo.Password}\nMot de passe *encrypté* du compte : {UserInfo.PasswordEncrypted}\nclé de chiffrement :  {UserInfo.key}";
                     File.WriteAllText(filePath, content);
 
                     /* // trnaslation in JSON
@@ -527,7 +589,7 @@ namespace Gestionaire_mot_de_passe
                             DisplayMenu();
                             return true; // completing the execution
                     }
-                    return false; // Продолжаем цикл
+                    return false; // Let's continue the cycle
                 });
             }
         }
