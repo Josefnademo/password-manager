@@ -1,0 +1,6 @@
+Nom du service: asdddd
+Lien du service : asd
+Login du compte : asdd
+Mot de passe du compte : kbuc=\<65sa[
+Mot de passe *encrypté* du compte : 
+clé de chiffrement :  

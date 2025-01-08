@@ -1,0 +1,6 @@
+Nom du service: a
+Lien du service : a
+Login du compte : 
+Mot de passe du compte : as
+Mot de passe *encrypté* du compte : ak
+clé de chiffrement :  as

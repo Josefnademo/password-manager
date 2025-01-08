@@ -1,9 +1,9 @@
 ﻿/******************************************************************************* 
-** CLASS       Enemy                                                          ** 
+** Projet      Gestionaire de mots de passes                                  ** 
 **                                                                            ** 
 ** Lieu       : ETML - section informatique                                   ** 
 ** Auteur     : Yosef Nademo                                                  ** 
-** Date       : 17.12.2024                                                    ** 
+** Date       : 08.01.2025                                                    ** 
 **                                                                            ** 
 ** Modifications                                                              ** 
 **   Auteur   :                                                               ** 
@@ -28,6 +28,17 @@
 ** - Sauvegarde et chargement des mots de passe depuis un fichier sécurisé.                          ** 
 **                                                                                                   ** 
 ** MÉTHODES PRINCIPALES :                                                                            ** 
+**                                                                                                   **
+** - public static void SetMasterPassword(string filePath)                                           ** 
+**    Permet à l'utilisateur de configurer un mot de passe principal. L'utilisateur est invité à     **
+**    saisir un nouveau mot de passe et à le confirmer. Si les mots de passe correspondent, le mot de**
+**    passe principal est enregistré dans un fichier pour une authentification ultérieure.           ** 
+**                                                                                                   ** 
+** - public static void AuthenticateMasterPassword(string filePath)                                  **
+**    Authentifie l'utilisateur en vérifiant le mot de passe principal. L'utilisateur est invité à   **
+**    saisir son mot de passe principal. Si le mot de passe saisi correspond à celui enregistré,     **
+**    l'authentification est réussie. Sinon, l'utilisateur est invité à réessayer.                   **
+**                                                                                                   **
 **- public Menu()                                                                                    ** 
 **     Initialise l'environnement du programme en s'assurant que le répertoire des mots de passe     ** 
 **     existe et lance l'affichage du menu.                                                          ** 
@@ -88,6 +99,9 @@
 **     Vérifie si la clé fournie est valide. Une clé valide ne doit contenir que des caractères      ** 
 **     alphabétiques. Retourne `true` si la clé est valide, sinon `false`.                           ** 
 **                                                                                                   ** 
+**                                                                                                   **
+**                                                                                                   **
+**                                                                                                   **
 ******************************************************************************************************/
 
 
@@ -105,20 +119,42 @@ namespace Gestionaire_mot_de_passe
     {
         static void Main(string[] args)
         {
+            // Ensure the master-password directory exists
+            Directory.CreateDirectory(Menu.MasterPasswordPath);
+
+            // Check if the master password is already set by verifying its existence in a file
+            string masterPasswordFilePath = Path.Combine(Menu.MasterPasswordPath, "masterPassword.txt");
+
+            if (File.Exists(masterPasswordFilePath))
+            {
+                // Authenticate with the existing master password
+                Menu.AuthenticateMasterPassword(masterPasswordFilePath);
+            }
+            else
+            {
+                // If not set, prompt the user to create a new master password
+                Menu.SetMasterPassword(masterPasswordFilePath);
+            }
+
+            // Proceed to the main menu after authentication
             Menu menu = new Menu();
+            menu.DisplayMenu();
         }
     }
 
     public class Menu
         {
-            public static string basePath = AppDomain.CurrentDomain.BaseDirectory;                                    //current program path
+            private static string masterPassword;                                                                     // Stores the master password
+            public static string basePath = AppDomain.CurrentDomain.BaseDirectory;                                    // current program path
             public static string PasswordPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\..\..\passwords"));// path to passwords folder
+            public static string MasterPasswordPath = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\..\..\passwords\config"));           // path to passwords folder
 
             private char[] symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_=+[]{};:'\",.<>?/|\\`~".ToCharArray(); // Character array for password generation //all charaters for crypting
 
             public string[] methodes = new string[] { "Random", "Viginère", "Créer par soi meme", "Accueil" };        //possible methods to create a password
             public int menuSelect = 0;                                                                                //Your option choosen               
             public string passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");               //password's  (files)
+            private  enum UserChoice { view , add, remove, exit};                                                     //choice of menu
 
             public Menu()
             {
@@ -139,11 +175,66 @@ namespace Gestionaire_mot_de_passe
                 public static string key;
             }
 
+        /// <summary>
+        /// Set the master password and save it to a file for future authentication.
+        /// </summary>
+        /// <param name="filePath">The file path to save the master password.</param>
+        public static void SetMasterPassword(string filePath)
+        {
+            Console.WriteLine("Setting up the master password.");
+            Console.Write("Enter a new master password: ");
+            string password = Console.ReadLine();
+            Console.Write("Confirm the master password: ");
+            string confirmPassword = Console.ReadLine();
 
-            /// <summary>
-            /// Displays the main menu with options for managing passwords.
-            /// </summary>
-            public void DisplayMenu()
+            if (password == confirmPassword)
+            {
+                // Save the master password to a file (in this case, we use plaintext for simplicity)
+                File.WriteAllText(filePath, password);
+                masterPassword = password;  // Store it in memory (for this example)
+                Console.WriteLine("Master password successfully set!");
+            }
+            else
+            {
+                Console.WriteLine("Passwords do not match. Please try again.  -(click on Enter to continue)");
+                Console.ReadLine();
+                Console.Clear();
+                SetMasterPassword(filePath);  // Retry if passwords don't match
+            }
+        }
+
+        /// <summary>
+        /// Authenticate the user by comparing the entered password with the stored master password.
+        /// </summary>
+        /// <param name="filePath">The file path where the master password is stored.</param>
+        public static void AuthenticateMasterPassword(string filePath)
+        {
+            string storedPassword = File.ReadAllText(filePath);  // Read the stored master password
+
+            Console.WriteLine("Authentication required.");
+            Console.Write("Enter your master password: ");
+            string enteredPassword = Console.ReadLine();
+
+            if (enteredPassword == storedPassword)
+            {
+                masterPassword = enteredPassword;  // Store it in memory for this session
+                Console.WriteLine("Authentication successful!");
+            }
+            else
+            {
+                Console.WriteLine("Incorrect password. Please try again.    -(click on Enter to continue)");
+                Console.ReadLine();
+                Console.Clear();
+                AuthenticateMasterPassword(filePath);  // Retry if incorrect
+            }
+        }
+    
+
+
+    /// <summary>
+    /// Displays the main menu with options for managing passwords.
+    /// </summary>
+    public void DisplayMenu()
             {
                 // Header
                 string header = "Bonjour et bienvenue! Choisissez une option dessous:";
@@ -180,28 +271,28 @@ namespace Gestionaire_mot_de_passe
                     }
                     else if (keyPressed.Key == ConsoleKey.Enter || keyPressed.Key == ConsoleKey.Spacebar)
                     {
-                        switch (menuSelect)
+                        switch ((UserChoice)menuSelect)
                         {
                             //1.  Consulter un mot de passe
-                            case 0:
+                            case UserChoice.view:
                                 Console.Clear();
                                 ViewPassword();
                                 break;
 
                             //2.Ajouter un mot de passe
-                            case 1:
+                            case UserChoice.add:
                                 Console.Clear();
                                 AddPassword();
                                 break;
 
                             //3.Supprimer un mot de passe
-                            case 2:
+                            case UserChoice.remove:
                                 Console.Clear();
                                 DeletePassword();
                                 break;
 
                             //4.Quitter le programme
-                            case 3:
+                            case UserChoice.exit:
                                 Environment.Exit(0);
                                 break;
 
@@ -453,7 +544,7 @@ namespace Gestionaire_mot_de_passe
                                 string text = Console.ReadLine();
 
                                 Console.Write("Entrez le master-password (La clé): ");
-                                string key = Console.ReadLine();
+                                string key = Console.ReadLine()/*masterPassword*/;
 
                                 if (string.IsNullOrWhiteSpace(key) || !VigenereCipher.IsKeyValid(key))
                                 {
@@ -464,10 +555,10 @@ namespace Gestionaire_mot_de_passe
                                 Console.WriteLine($"mot de passe crypté : {encryptedText}");
                                 UserInfo.PasswordEncrypted = encryptedText;
 
-                                string decryptedText = VigenereCipher.Decrypt(encryptedText, key);
+                               /* string decryptedText = VigenereCipher.Decrypt(encryptedText, key);
                                 Console.WriteLine($"mot de passe decrypté : {decryptedText}");
                                 UserInfo.Password = decryptedText;
-                                UserInfo.key = key;
+                                UserInfo.key = key;*/
 
                                 passwordFilePath = Path.Combine(PasswordPath, $"{UserInfo.ServiceName}.txt");
                                 SavePassword(passwordFilePath, UserInfo.Password);

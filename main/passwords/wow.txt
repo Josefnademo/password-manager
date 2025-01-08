@@ -1,0 +1,6 @@
+Nom du service: wow
+Lien du service : wow
+Login du compte : wow
+Mot de passe du compte : wow
+Mot de passe *encrypté* du compte : scs
+clé de chiffrement :  wow

@@ -1,0 +1,6 @@
+Nom du service: awe
+Lien du service : hhtps
+Login du compte : awe
+Mot de passe du compte : water
+Mot de passe *encrypté* du compte : sopaf
+clé de chiffrement :  wow

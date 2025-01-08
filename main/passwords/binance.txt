@@ -1,6 +1,0 @@
-Nom du service: binance
-Lien du service : no
-Login du compte : bini
-Mot de passe du compte : bitcoinnn
-Mot de passe *encrypté* du compte : cqmdwbovg
-clé de chiffrement :  bit

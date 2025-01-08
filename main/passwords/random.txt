@@ -1,0 +1,6 @@
+Nom du service: random
+Lien du service : httpsrandom
+Login du compte : random
+Mot de passe du compte : tJ/[{tE>r+H~
+Mot de passe *encrypté* du compte : hegsmkLHZV
+clé de chiffrement :  water

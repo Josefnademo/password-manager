@@ -1,0 +1,6 @@
+Nom du service: LENOVO
+Lien du service : HTTPS LENOVO
+Login du compte : LENOVO123
+Mot de passe du compte : lenovoLOVE
+Mot de passe *encrypté* du compte : hegsmkLHZV
+clé de chiffrement :  water

@@ -1,0 +1,6 @@
+Nom du service: asdas
+Lien du service : 
+Login du compte : as
+Mot de passe du compte : asd
+Mot de passe *encrypté* du compte : lojv
+clé de chiffrement :  word

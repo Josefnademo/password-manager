@@ -1,0 +1,6 @@
+Nom du service: asdg
+Lien du service : asdf
+Login du compte : asdg
+Mot de passe du compte : 
+Mot de passe *encrypté* du compte : akgf
+clé de chiffrement :  
